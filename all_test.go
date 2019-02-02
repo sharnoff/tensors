@@ -10,6 +10,7 @@ func TestAll(t *testing.T) {
 	g := testdep.New()
 
 	// interpreter_test.go functions
+	g.Require(tEquals, tNewInterpreter)
 	g.Require(tCheckPoint, tNewInterpreter)
 	g.Require(tCheckIndex, tNewInterpreter)
 	g.Require(tIndex, tCheckPoint)
@@ -26,6 +27,7 @@ func TestAll(t *testing.T) {
 		Name string
 	}{
 		{tNewInterpreter, "NewInterpreter"},
+		{tEquals, "Equals"},
 		{tCheckPoint, "CheckPoint"},
 		{tCheckIndex, "CheckIndex"},
 		{tIndex, "Index"},

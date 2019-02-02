@@ -96,6 +96,27 @@ func (in Interpreter) CheckPoint(point []int) error {
 	return nil
 }
 
+// Equals returns whether or not two Interpreters are equal, i.e. whether or not their dimensions
+// are the same. When called with Tensors, it will not examine the underlying values, but will
+// still return true if the dimensions are equivalent.
+func Equals(a, b Interpreter) bool {
+	eq := func(x, y []int) bool {
+		if len(x) != len(y) {
+			return false
+		}
+
+		for i := range x {
+			if x[i] != y[i] {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	return eq(a.Dims, b.Dims) && eq(a.Sizes, b.Sizes)
+}
+
 // Index returns the index in the base array that the given point corresponds to. Index will panic
 // if any of the criteria documented by Interpreter.CheckPoint() are not met.
 func (in Interpreter) Index(point []int) int {

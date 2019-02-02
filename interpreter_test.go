@@ -33,6 +33,35 @@ func tNewInterpreter(t *testing.T) {
 }
 
 // requires NewInterpreter
+func tEquals(t *testing.T) {
+	table := []struct{
+		a, b []int
+		equals bool
+	}{
+		{[]int{1}, []int{1}, true},
+		{[]int{5}, []int{5}, true},
+		{[]int{1, 1, 1}, []int{1, 1, 1}, true},
+		{[]int{6, 3, 8}, []int{6, 3, 8}, true},
+
+		{[]int{1}, []int{1, 1}, false},
+		{[]int{1, 1}, []int{1, 1, 1}, false},
+		{[]int{1, 1, 1}, []int{1, 1, 2}, false},
+		{[]int{6, 3, 8}, []int{8, 3, 6}, false},
+	}
+
+	for _, tab := range table {
+		a, b := NewInterpreter(tab.a), NewInterpreter(tab.b)
+		if Equals(a, b) != tab.equals {
+			if tab.equals {
+				t.Errorf("Equals: Expected %v = %v, got not equal.", a, b)
+			} else {
+				t.Errorf("Equals: Expected %v != %v, got equal.", a, b)
+			}
+		}
+	}
+}
+
+// requires NewInterpreter
 func tCheckPoint(t *testing.T) {
 	in := NewInterpreter([]int{2, 3, 4})
 
